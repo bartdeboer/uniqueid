@@ -37,7 +37,7 @@ func TestGenerateFormat(t *testing.T) {
 	id := Generate()
 
 	fmt.Printf("Unix:  %s\n", GenerateUnixTimestampID())
-	fmt.Printf("Mili:  %s\n", GenerateUnixMiliTimestampID())
+	fmt.Printf("Mili:  %s\n", GenerateUnixMilliTimestampID())
 	fmt.Printf("Micro: %s\n", GenerateUnixMicroTimestampID())
 	fmt.Printf("Nano:  %s\n", GenerateUnixNanoTimestampID())
 	fmt.Printf("ID:    %s\n", id)

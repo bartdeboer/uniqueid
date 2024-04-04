@@ -115,7 +115,7 @@ func GenerateUnixTimestampID() string {
 	return EncodeBase62(uint64(time.Now().Unix()))
 }
 
-func GenerateUnixMiliTimestampID() string {
+func GenerateUnixMilliTimestampID() string {
 	return EncodeBase62(uint64(time.Now().UnixMilli()))
 }
 

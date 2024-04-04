@@ -36,10 +36,14 @@ func TestGenerate(t *testing.T) {
 func TestGenerateFormat(t *testing.T) {
 	id := Generate()
 
-	fmt.Printf("Unix:  %s\n", GenerateUnixTimestampID())
-	fmt.Printf("Mili:  %s\n", GenerateUnixMilliTimestampID())
-	fmt.Printf("Micro: %s\n", GenerateUnixMicroTimestampID())
-	fmt.Printf("Nano:  %s\n", GenerateUnixNanoTimestampID())
+	fmt.Printf("Unix:        %s\n", UnixTimestampID())
+	fmt.Printf("Mili:        %s\n", UnixMilliTimestampID())
+	fmt.Printf("Micro:       %s\n", UnixMicroTimestampID())
+	fmt.Printf("Nano:        %s\n", UnixNanoTimestampID())
+	fmt.Printf("Lower Unix:  %s\n", LowerUnixTimestampID())
+	fmt.Printf("Lower Mili:  %s\n", LowerUnixMilliTimestampID())
+	fmt.Printf("Lower Micro: %s\n", LowerUnixMicroTimestampID())
+	fmt.Printf("Lower Nano:  %s\n", LowerUnixNanoTimestampID())
 	fmt.Printf("ID:    %s\n", id)
 
 	// Very basic format check: length and allowed characters

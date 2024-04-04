@@ -15,7 +15,7 @@ var (
 	mutex         sync.Mutex
 )
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/"
 
 func pow(base, exponent uint64) uint64 {
 	result := uint64(1)
@@ -111,20 +111,36 @@ func DecodeBase62(coded string) (uint64, error) {
 	return Decode(coded, 62)
 }
 
-func GenerateUnixTimestampID() string {
-	return EncodeBase62(uint64(time.Now().Unix()))
+func UnixTimestampID() string {
+	return Encode(uint64(time.Now().Unix()), 62)
 }
 
-func GenerateUnixMilliTimestampID() string {
-	return EncodeBase62(uint64(time.Now().UnixMilli()))
+func UnixMilliTimestampID() string {
+	return Encode(uint64(time.Now().UnixMilli()), 62)
 }
 
-func GenerateUnixMicroTimestampID() string {
-	return EncodeBase62(uint64(time.Now().UnixMicro()))
+func UnixMicroTimestampID() string {
+	return Encode(uint64(time.Now().UnixMicro()), 62)
 }
 
-func GenerateUnixNanoTimestampID() string {
-	return EncodeBase62(uint64(time.Now().UnixNano()))
+func UnixNanoTimestampID() string {
+	return Encode(uint64(time.Now().UnixNano()), 62)
+}
+
+func LowerUnixTimestampID() string {
+	return Encode(uint64(time.Now().Unix()), 36)
+}
+
+func LowerUnixMilliTimestampID() string {
+	return Encode(uint64(time.Now().UnixMilli()), 36)
+}
+
+func LowerUnixMicroTimestampID() string {
+	return Encode(uint64(time.Now().UnixMicro()), 36)
+}
+
+func LowerUnixNanoTimestampID() string {
+	return Encode(uint64(time.Now().UnixNano()), 36)
 }
 
 func Generate() string {

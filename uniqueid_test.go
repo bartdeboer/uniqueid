@@ -4,17 +4,24 @@ import (
 	"fmt"
 	"math/rand"
 	"testing"
+	"unsafe"
 )
 
 func TestEncodeDecode(t *testing.T) {
 	iterations := 50
 	for i := 0; i < iterations; i++ {
-		randomPart := uint64(rand.Intn(10000000000))
-		encoded := Encode(randomPart, 62)
-		decoded, _ := Decode(encoded, 62)
-		fmt.Printf("%d: %s -> %d\n", randomPart, encoded, decoded)
-		if randomPart != decoded {
-			t.Fatalf("Decoded int doesn't match original int %d: %s -> %d", randomPart, encoded, decoded)
+		base := rand.Intn(65-2) + 2
+		var randomInt uint64
+		if unsafe.Sizeof(randomInt) == 8 { // 64-bit system
+			randomInt = uint64(rand.Int63())
+		} else { // 32-bit system
+			randomInt = uint64(rand.Int31())
+		}
+		encoded := Encode(randomInt, base)
+		decoded, _ := Decode(encoded, base)
+		fmt.Printf("base%d %d: %s -> %d\n", base, randomInt, encoded, decoded)
+		if randomInt != decoded {
+			t.Fatalf("Decoded int doesn't match original int %d: %s -> %d", randomInt, encoded, decoded)
 		}
 	}
 }

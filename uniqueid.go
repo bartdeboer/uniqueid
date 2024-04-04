@@ -52,17 +52,38 @@ func generateUniqueID() string {
 }
 
 func Encode(number uint64, base int) string {
+	if base > 64 {
+		panic(fmt.Errorf("Error: base exceeds 64: %d", base))
+	}
+	validChars := chars[:base] // Restrict chars to valid set for the base
 	if number == 0 {
-		return string(chars[0]) // Return the first character if number is 0
+		return string(validChars[0]) // Return the first character if number is 0
 	}
 	var encoded bytes.Buffer
 	uint64Base := uint64(base)
 	for number > 0 {
 		remainder := number % uint64Base
 		number /= uint64Base
-		encoded.WriteByte(chars[remainder])
+		encoded.WriteByte(validChars[remainder])
 	}
 	return string(reverseBytes(encoded.Bytes()))
+}
+
+func Decode(encoded string, base int) (uint64, error) {
+	if base > 64 {
+		panic(fmt.Errorf("Error: base exceeds 64: %d", base))
+	}
+	validChars := chars[:base] // Restrict chars to valid set for the base
+	var number uint64 = 0
+	uint64Base := uint64(base)
+	for i, char := range encoded {
+		index := strings.IndexRune(validChars, char)
+		if index == -1 {
+			return 0, fmt.Errorf("invalid character: %s\n", string(char))
+		}
+		number += uint64(index) * pow(uint64Base, uint64(len(encoded)-i-1))
+	}
+	return number, nil
 }
 
 // func encode2(number uint64, base int) string {
@@ -89,19 +110,6 @@ func Encode(number uint64, base int) string {
 // 	}
 // 	return encoded
 // }
-
-func Decode(encoded string, base int) (uint64, error) {
-	var number uint64 = 0
-	uint64Base := uint64(base)
-	for i, char := range encoded {
-		index := strings.IndexRune(chars, char)
-		if index == -1 {
-			return 0, fmt.Errorf("invalid character: %s\n", string(char))
-		}
-		number += uint64(index) * pow(uint64Base, uint64(len(encoded)-i-1))
-	}
-	return number, nil
-}
 
 func EncodeBase62(number uint64) string {
 	return Encode(number, 62)
